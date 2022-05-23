@@ -48,8 +48,6 @@ router.put("/articles/:articleId/:pwd", async (req, res) => {
 router.post("/articles", async (req, res) => {
     const { title , content, writer, pwd } = req.body;
 
-    // const recArticleId = await Articles.findOne({},{ _id:false, articleId:1}).sort({articleId:-1})
-    // let { articleId } = Number(recArticleId) + 1;
     const createdArticles = await Articles.create({ title , content, createDate: new Date(), writer, pwd });
 
     res.json({ articles: createdArticles });
