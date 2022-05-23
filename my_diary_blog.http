@@ -1,0 +1,27 @@
+#GET http://localhost:3000/api/articles/4
+
+#DELETE http://localhost:3000/api/articles/8/1234
+
+
+#POST http://localhost:3000/api/articles
+#Content-Type: application/json
+#
+#{
+#  "title": "title - json",
+#  "content": "content - json",
+#  "writer": "mjk",
+#  "pwd": "1234"
+#}
+#
+
+
+PUT http://localhost:3000/api/articles/9/1234
+Content-Type: application/json
+
+{
+  "title": "update",
+  "content": "update"
+}
+
+
+
