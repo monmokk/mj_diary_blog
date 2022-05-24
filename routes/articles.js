@@ -19,6 +19,7 @@ router.get("/articles", async (req, res, next) => {
 router.get("/articles/:articleId", async (req, res) => {
     const { articleId } = req.params;
     const articles = await Articles.findOne({ articleId }, {articleId:1, title: 1, writer: 1, createDate:1, content:1});
+
     res.json({ articles });
 });
 router.delete("/articles/:articleId/:pwd", async (req, res) => {
@@ -27,20 +28,28 @@ router.delete("/articles/:articleId/:pwd", async (req, res) => {
 
     const existsArticles = await Articles.find({ articleId, pwd });
     if (existsArticles.length > 0) {
-        await Articles.deleteOne({ articleId });
+        await Articles.deleteOne({ articleId, pwd });
     }
 
     res.json({ result: "success" });
 });
-router.put("/articles/:articleId/:pwd", async (req, res) => {
+
+// router.put("/articles/:articleId/:pwd", async (req, res) => {
+//     const { articleId } = req.params;
+//     const { pwd } = req.params;
+//     const { title, content, createDate, writer } = req.body;
+//
+//     await Articles.updateOne({ articleId }, { $set: { articleId, title, content, createDate, writer, pwd } }, {upsert: true});
+//
+//     res.json({ success: true });
+// })
+
+router.patch("/articles/:articleId/:pwd", async (req, res) => {
     const { articleId } = req.params;
     const { pwd } = req.params;
     const { title, content } = req.body;
 
-    const existsArticles = await Articles.find({ articleId,  pwd});
-    if (existsArticles.length) {
-        await Articles.updateOne({ articleId: Number(articleId) }, { $set: { title, content } });
-    }
+    await Articles.updateOne({ articleId, pwd }, { $set: { title, content } });
 
     res.json({ success: true });
 })
