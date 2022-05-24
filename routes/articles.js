@@ -10,11 +10,14 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
     res.send('this is about page');
 });
+
 //목록
 router.get("/articles", async (req, res, next) => {
     const articles = await Articles.find({}, { articleId:1, title: 1, writer: 1, createDate:1 }).sort({createDate:-1});
+    
     res.json({ articles });
 });
+
 //상품 상세 조회 API
 router.get("/articles/:articleId", async (req, res) => {
     const { articleId } = req.params;
@@ -22,9 +25,9 @@ router.get("/articles/:articleId", async (req, res) => {
 
     res.json({ articles });
 });
+
 router.delete("/articles/:articleId/:pwd", async (req, res) => {
-    const { articleId } = req.params;
-    const { pwd } = req.params;
+    const { articleId, pwd } = req.params;
 
     const existsArticles = await Articles.find({ articleId, pwd });
     if (existsArticles.length > 0) {
@@ -45,8 +48,7 @@ router.delete("/articles/:articleId/:pwd", async (req, res) => {
 // })
 
 router.patch("/articles/:articleId/:pwd", async (req, res) => {
-    const { articleId } = req.params;
-    const { pwd } = req.params;
+    const { articleId, pwd } = req.params;
     const { title, content } = req.body;
 
     await Articles.updateOne({ articleId, pwd }, { $set: { title, content } });
