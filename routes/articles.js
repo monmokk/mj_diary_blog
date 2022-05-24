@@ -14,7 +14,7 @@ router.get('/about', (req, res) => {
 //목록
 router.get("/articles", async (req, res, next) => {
     const articles = await Articles.find({}, { articleId:1, title: 1, writer: 1, createDate:1 }).sort({createDate:-1});
-    
+
     res.json({ articles });
 });
 
@@ -31,7 +31,7 @@ router.delete("/articles/:articleId/:pwd", async (req, res) => {
 
     const existsArticles = await Articles.find({ articleId, pwd });
     if (existsArticles.length > 0) {
-        await Articles.deleteOne({ articleId, pwd });
+        await Articles.deleteOne({ articleId });
     }
 
     res.json({ result: "success" });
