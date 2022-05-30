@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const User = require("../schemas/user");
+// const User = require("../schemas/user");
+const { User } = require("../models");
 
 module.exports = (req, res, next) => {
-    console.log(req)
     const cookie__ = req.headers.cookie
     if (!cookie__.includes('my-secret-key')) {
         res.status(401).send({
@@ -11,8 +11,9 @@ module.exports = (req, res, next) => {
         return;
     }
     try {
-        let {userIdx} = jwt.verify(cookie__.split('=')[1], "my-secret-key");
-        User.findOne({userIdx}).then((user) => {
+        let { userId } = jwt.verify(cookie__.split('=')[1], "my-secret-key");
+        console.log('login user = ,', userId )
+        User.findByPk(userId).then((user) => {
             res.locals.user = user;
             next();
         });
