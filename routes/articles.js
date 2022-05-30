@@ -34,7 +34,7 @@ router.delete("/articles/:articleId/:pwd", async (req, res) => {
         await Articles.deleteOne({ articleId });
     }
 
-    res.json({ result: "success" });
+    res.json({ success: true });
 });
 
 // router.put("/articles/:articleId/:pwd", async (req, res) => {

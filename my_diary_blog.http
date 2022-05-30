@@ -30,3 +30,23 @@
 #"content": "update"
 #}
 
+#GET https://google.com
+
+#
+#GET http://localhost:3000/
+GET http://localhost:3000/api/users/me
+#POST http://localhost:3000/api/users
+#Content-Type: application/json
+#
+#{
+#  "email": "mjk@google.com",
+#  "password": "1234",
+#  "nickname": "mjkk"
+#}
+#POST http://localhost:3000/api/auth
+#Content-Type: application/json
+#
+#{
+#  "email": "mjk@google.com",
+#  "password": "1234"
+#}
