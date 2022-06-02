@@ -5,12 +5,14 @@ const { Op } = require("sequelize");
 const { User } = require("../models");
 const authMiddleware = require("../middlewares/auth-middleware");
 const jwt = require("jsonwebtoken");
+const {ValidationError} = require("joi");
 
 // 닉네임이 같은 값이면 안되게. (값을 포함하는 경우는 ㄱㅊ)
 const postUsersSchema = Joi.object({
     nickname: Joi.string().min(3).alphanum().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().disallow(Joi.ref('nickname')).required(),
+    // password: Joi.string().disallow(Joi.ref('nickname')).required(),
+    password: Joi.string().disallow(Joi.in('nickname')).required(),
     repeat_password: Joi.equal(Joi.ref('password'))
 });
 
@@ -41,6 +43,7 @@ router.post("/auth", async (req, res) => {
                 email,
             },
         });
+
         if (!user) {
             res.status(400).send({
                 errorMessage: "이메일 또는 패스워드가 잘못됐습니다.",
@@ -88,10 +91,18 @@ router.post("/users", async (req, res) => {
         res.status(201).send({});
         const token = jwt.sign({ userId: user.userId }, "my-secret-key");
     } catch (err) {
-        console.log(err);
-        res.status(400).send({
-            errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
-        });
+        if(err instanceof ValidationError){
+            console.log("validation err", err);
+            res.status(400).send({
+                errorMessage: "비밀번호 혹은 아이디 형식이 올바르지 않습니다.",
+            });
+        } else {
+            console.log(err);
+            res.status(400).send({
+                errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+            });
+        }
+
     }
 });
 

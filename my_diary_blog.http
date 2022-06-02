@@ -1,8 +1,8 @@
-#GET http://localhost:3000/api/articles/2
+#GET http://52.79.228.242/api/articles/2
 
-#DELETE http://localhost:3000/api/replies/2/9
+#DELETE http://52.79.228.242/api/replies/2/9
 
-#PUT http://localhost:3000/api/articles/101/1234
+#PUT http://52.79.228.242/api/articles/101/1234
 #Content-Type: application/json
 #
 #{
@@ -17,43 +17,43 @@
 #GET https://google.com
 
 #
-#GET http://localhost:3000/
-#GET http://localhost:3000/api/users/me
+#GET http://52.79.228.242/
+#GET http://52.79.228.242/api/users/me
 
 
-#POST http://localhost:3000/api/users
+
+#PATCH http://52.79.228.242/api/replies/2/3
+#Content-Type: application/json
+#
+#{
+#  "content": "update"
+#}
+#POST http://52.79.228.242/api/auth
 #Content-Type: application/json
 #
 #{
 #  "email": "test@mjkk.com",
-#  "password": "1234",
-#  "nickname": "test",
-#  "repeat_password": "1234"
+#  "password": "1234"
 #}
-
-#POST http://localhost:3000/api/articles
+#POST http://52.79.228.242/api/articles
 #Content-Type: application/json
 #
 #{
 #  "title": "title - json",
 #  "content": "content - json"
 #}
-#POST http://localhost:3000/api/replies/2
+#POST http://52.79.228.242/api/replies/2
 #Content-Type: application/json
 #
 #{
-#  "content": ""
+#  "content": "test"
 #}
-#POST http://localhost:3000/api/auth
-#Content-Type: application/json
-#
-#{
-#  "email": "mjk@mjkk.com",
-#  "password": "1234"
-#}
-PATCH http://localhost:3000/api/replies/2/3
+POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "content": "update"
+  "email": "test@mjkk.com",
+  "password": "1234",
+  "nickname": "test",
+  "repeat_password": "1234"
 }
